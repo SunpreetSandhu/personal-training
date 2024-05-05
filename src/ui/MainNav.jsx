@@ -52,6 +52,9 @@ function MainNav() {
         <li>
           <Link href="/dashboard">Home</Link>
         </li>
+        <li>
+          <Link href="/bookings">Bookings</Link>
+        </li>
       </NavList>
     </nav>
   );
