@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { NavLink } from "react-router-dom";
 const NavList = styled.ul`
   display: flex;
   flex-direction: column;
@@ -50,10 +50,10 @@ function MainNav() {
     <nav>
       <NavList>
         <li>
-          <Link href="/dashboard">Home</Link>
+          <NavLink to="/dashboard">Home</NavLink>
         </li>
         <li>
-          <Link href="/bookings">Bookings</Link>
+          <NavLink to="/bookings">Bookings</NavLink>
         </li>
       </NavList>
     </nav>
