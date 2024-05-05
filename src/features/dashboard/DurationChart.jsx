@@ -115,7 +115,7 @@ function prepareData(startData, stays) {
 
   const data = stays
     .reduce((arr, cur) => {
-      const num = cur.numNights;
+      const num = cur.numDays;
       if (num === 1) return incArrayValue(arr, "1 day");
       if (num === 2) return incArrayValue(arr, "2 days");
       if (num === 3) return incArrayValue(arr, "3 days");

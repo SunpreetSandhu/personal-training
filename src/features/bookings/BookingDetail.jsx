@@ -18,7 +18,7 @@ const HeadingGroup = styled.div`
 
 function BookingDetail() {
   const booking = {};
-  const status = "checked-in";
+  const status = "in-progress";
 
   const moveBack = useMoveBack();
 

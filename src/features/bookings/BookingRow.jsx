@@ -7,7 +7,7 @@ import Table from "../../ui/Table";
 import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
 
-const Cabin = styled.div`
+const Program = styled.div`
   font-size: 1.6rem;
   font-weight: 600;
   color: var(--color-grey-600);
@@ -50,13 +50,13 @@ function BookingRow({
 }) {
   const statusToTagName = {
     unconfirmed: "blue",
-    "checked-in": "green",
-    "checked-out": "silver",
+    "in-progress": "green",
+    completed: "green",
   };
 
   return (
     <Table.Row>
-      <Cabin>{programName}</Cabin>
+      <Program>{programName}</Program>
 
       <Stacked>
         <span>{clientName}</span>

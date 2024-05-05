@@ -71,7 +71,7 @@ function CreateProgramForm() {
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="image">Cabin photo</Label>
+        <Label htmlFor="image">Program photo</Label>
         <FileInput id="image" accept="image/*" />
       </FormRow>
 
