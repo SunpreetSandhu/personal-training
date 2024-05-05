@@ -46,7 +46,15 @@ const Link = styled.a`
 `;
 
 function MainNav() {
-  return <nav>Nav</nav>;
+  return (
+    <nav>
+      <NavList>
+        <li>
+          <Link href="/dashboard">Home</Link>
+        </li>
+      </NavList>
+    </nav>
+  );
 }
 
 export default MainNav;
