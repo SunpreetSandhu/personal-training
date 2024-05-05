@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import GlobalStyles from "./styles/GlobalStyles";
 import Button from "./ui/Button";
+import Heading from "./ui/Heading";
 import Input from "./ui/Input";
 
 const H1 = styled.h1`
@@ -18,9 +19,13 @@ function App() {
     <>
       <GlobalStyles />
       <StyledApp>
-        <H1>personal training</H1>
+        <Heading as="h1">Personal Training</Heading>
+        <Heading as="h2">Enroll/Leave Program</Heading>
+
         <Button onClick={() => alert("enroll")}>Enroll</Button>
         <Button onClick={() => alert("leave")}>Leave</Button>
+        <Heading as="h3">Form</Heading>
+
         <Input type="number" placeholder="Number of clients" />
         <Input type="number" placeholder="Number of clients" />
       </StyledApp>
