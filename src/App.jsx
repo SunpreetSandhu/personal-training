@@ -1,54 +1,31 @@
-import styled from "styled-components";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+
 import GlobalStyles from "./styles/GlobalStyles";
-import Button from "./ui/Button";
-import Heading from "./ui/Heading";
-import Input from "./ui/Input";
-import Row from "./ui/Row";
+import Dashboard from "./pages/Dashboard";
+import Bookings from "./pages/Bookings";
+import Programs from "./pages/Programs";
+import Users from "./pages/Users";
+import Settings from "./pages/Settings";
+import Account from "./pages/Account";
+import Login from "./pages/Login";
+import PageNotFound from "./pages/PageNotFound";
 
-const H1 = styled.h1`
-  font-size: 30px;
-  font-weight: 600;
-  background-color: yellow;
-`;
-
-const StyledApp = styled.main`
-  padding: 20px;
-`;
 function App() {
   return (
     <>
       <GlobalStyles />
-      <StyledApp>
-        <Row type="vertical">
-          <Row type="horizontal">
-            <Heading as="h1">Personal Training</Heading>
-            <div>
-              <Heading as="h2">Enroll/Leave Program</Heading>
-              <Button
-                variation="primary"
-                size="medium"
-                onClick={() => alert("enroll")}
-              >
-                Enroll
-              </Button>
-              <Button
-                variation="secondary"
-                size="small"
-                onClick={() => alert("leave")}
-              >
-                Leave
-              </Button>
-            </div>
-          </Row>
-          <Row type="vertical">
-            <Heading as="h3">Form</Heading>
-            <form>
-              <Input type="number" placeholder="Number of clients" />
-              <Input type="number" placeholder="Number of clients" />
-            </form>
-          </Row>
-        </Row>
-      </StyledApp>
+      <BrowserRouter>
+        <Routes>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="bookings" element={<Bookings />} />
+          <Route path="programs" element={<Programs />} />
+          <Route path="users" element={<Users />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="account" element={<Account />} />
+          <Route path="login" element={<Login />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
