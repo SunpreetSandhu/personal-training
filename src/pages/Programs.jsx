@@ -11,6 +11,7 @@ function Programs() {
     <Row type="horizontal">
       <Heading as="h1">All programs</Heading>
       <p>TEST</p>
+      <img src="https://kgmtpxeccxdasvbmmgny.supabase.co/storage/v1/object/public/program-images/program-001.jpg" />
     </Row>
   );
 }
