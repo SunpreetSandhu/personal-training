@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import { deleteProgram } from "../../services/apiPrograms";
 import { formatCurrency } from "../../utils/helpers";
@@ -50,8 +50,16 @@ function ProgramRow({ program }) {
     discount,
     image,
   } = program;
+
+  const queryClient = useQueryClient();
   const { isLoading: isDeleting, mutate } = useMutation({
     mutationFn: deleteProgram,
+    onSuccess: () => {
+      //invalidate so react query refetches data
+      queryClient.invalidateQueries({
+        queryKey: ["program"],
+      });
+    },
   });
   return (
     <TableRow role="row">
