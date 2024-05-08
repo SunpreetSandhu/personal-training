@@ -115,7 +115,7 @@ function BookingDataBox({ booking }) {
     hasNutrition,
     observations,
     isPaid,
-    clients: { fullName: clientName, email, country, countryFlag, nationalID },
+    clients: { fullName: guestName, email, country, countryFlag, nationalID },
     programs: { name: programName },
   } = booking;
 
@@ -142,7 +142,7 @@ function BookingDataBox({ booking }) {
         <Client>
           {countryFlag && <Flag src={countryFlag} alt={`Flag of ${country}`} />}
           <p>
-            {clientName} {numClients > 1 ? `+ ${numClients - 1} clients` : ""}
+            {guestName} {numClients > 1 ? `+ ${numClients - 1} clients` : ""}
           </p>
           <span>&bull;</span>
           <p>{email}</p>
