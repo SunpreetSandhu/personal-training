@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import styled from "styled-components";
 import { deleteProgram } from "../../services/apiPrograms";
 import { formatCurrency } from "../../utils/helpers";
@@ -55,11 +56,13 @@ function ProgramRow({ program }) {
   const { isLoading: isDeleting, mutate } = useMutation({
     mutationFn: deleteProgram,
     onSuccess: () => {
+      toast.success("program successfully deleted");
       //invalidate so react query refetches data
       queryClient.invalidateQueries({
         queryKey: ["program"],
       });
     },
+    onError: (err) => toast.error(err.message),
   });
   return (
     <TableRow role="row">
