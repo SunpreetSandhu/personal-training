@@ -1,5 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-
+import { getPrograms } from "../../services/apiPrograms";
+import Spinner from "../../ui/Spinner";
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
 
@@ -25,6 +27,15 @@ const TableHeader = styled.header`
 `;
 
 function ProgramTable() {
+  const {
+    isLoading,
+    data: programs,
+    error,
+  } = useQuery({
+    queryKey: ["program"],
+    queryFn: getPrograms,
+  });
+  if (isLoading) return <Spinner />;
   return <div>Table</div>;
 }
 
