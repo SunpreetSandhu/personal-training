@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import { getPrograms } from "../../services/apiPrograms";
 import Spinner from "../../ui/Spinner";
+import ProgramRow from "./ProgramRow";
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
 
@@ -36,7 +37,22 @@ function ProgramTable() {
     queryFn: getPrograms,
   });
   if (isLoading) return <Spinner />;
-  return <div>Table</div>;
+  return (
+    <Table role="table">
+      <TableHeader role="row">
+        <div></div>
+        <div>Program</div>
+        <div>Capacity</div>
+        <div>Price</div>
+        <div>Discount</div>
+        <div></div>
+        <div></div>
+      </TableHeader>
+      {programs.map((program) => (
+        <ProgramRow program={program} key={program.id} />
+      ))}
+    </Table>
+  );
 }
 
 export default ProgramTable;
