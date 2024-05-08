@@ -9,3 +9,13 @@ export async function getPrograms() {
 
   return data;
 }
+
+export async function deleteProgram(id) {
+  const { data, error } = await supabase.from("programs").delete().eq("id", id);
+  if (error) {
+    console.error(error);
+    throw new Error("Programs could not be deleted");
+  }
+
+  return data;
+}

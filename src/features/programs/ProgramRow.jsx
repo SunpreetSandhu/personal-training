@@ -1,4 +1,6 @@
+import { useMutation } from "@tanstack/react-query";
 import styled from "styled-components";
+import { deleteProgram } from "../../services/apiPrograms";
 import { formatCurrency } from "../../utils/helpers";
 const TableRow = styled.div`
   display: grid;
@@ -40,7 +42,17 @@ const Discount = styled.div`
 `;
 
 function ProgramRow({ program }) {
-  const { name, maxCapacity, regularPrice, discount, image } = program;
+  const {
+    id: programId,
+    name,
+    maxCapacity,
+    regularPrice,
+    discount,
+    image,
+  } = program;
+  const { isLoading: isDeleting, mutate } = useMutation({
+    mutationFn: deleteProgram,
+  });
   return (
     <TableRow role="row">
       <Img src={image} />
@@ -48,7 +60,9 @@ function ProgramRow({ program }) {
       <div>Space for up to {maxCapacity} clients</div>
       <Price>{formatCurrency(regularPrice)}</Price>
       <Discount>{formatCurrency(discount)}</Discount>
-      <button>Delete</button>
+      <button onClick={() => mutate(programId)} disabled={isDeleting}>
+        Delete
+      </button>
     </TableRow>
   );
 }
