@@ -9,8 +9,9 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createProgram } from "../../services/apiPrograms";
 import toast from "react-hot-toast";
+import FormRow from "../../ui/FormRow";
 
-const FormRow = styled.div`
+const FormRow2 = styled.div`
   display: grid;
   align-items: center;
   grid-template-columns: 24rem 1fr 1.2fr;
@@ -48,7 +49,9 @@ const Error = styled.span`
 
 function CreateProgramForm() {
   const queryClient = useQueryClient();
-  const { register, handleSubmit, reset, getValues } = useForm();
+  const { register, handleSubmit, reset, getValues, formState } = useForm();
+  const { errors } = formState;
+  console.log(errors);
 
   const { mutate, isLoading: isCreating } = useMutation({
     mutationFn: createProgram,
@@ -69,8 +72,7 @@ function CreateProgramForm() {
   }
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
-      <FormRow>
-        <Label htmlFor="name">Program Name</Label>
+      <FormRow label="Program Name" error={errors?.name?.message}>
         <Input
           type="text"
           id="name"
@@ -80,8 +82,7 @@ function CreateProgramForm() {
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="maxCapacity">Maximum Capacity</Label>
+      <FormRow label="Max Capacity" error={errors?.maxCapacity?.message}>
         <Input
           type="number"
           id="maxCapacity"
@@ -95,8 +96,7 @@ function CreateProgramForm() {
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="regularPrice">Regular Price</Label>
+      <FormRow label="Regular price" error={errors?.regularPrice?.message}>
         <Input
           type="number"
           id="regularPrice"
@@ -110,8 +110,7 @@ function CreateProgramForm() {
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="discount">Discount</Label>
+      <FormRow label="Discount" error={errors?.discount?.message}>
         <Input
           type="number"
           id="discount"
@@ -125,8 +124,7 @@ function CreateProgramForm() {
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="description">Description for Website</Label>
+      <FormRow label="Description" error={errors?.description?.message}>
         <Textarea
           type="number"
           id="description"
@@ -137,18 +135,17 @@ function CreateProgramForm() {
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="image">Program Photo</Label>
+      <FormRow label="Program Photo">
         <FileInput id="image" accept="image/*" />
       </FormRow>
 
-      <FormRow>
+      <FormRow2>
         {/* type is an HTML attribute! */}
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
         <Button disabled={isCreating}>Add Program</Button>
-      </FormRow>
+      </FormRow2>
     </Form>
   );
 }
