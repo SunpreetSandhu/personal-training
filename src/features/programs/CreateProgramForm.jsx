@@ -48,7 +48,7 @@ const Error = styled.span`
 
 function CreateProgramForm() {
   const queryClient = useQueryClient();
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, getValues } = useForm();
 
   const { mutate, isLoading: isCreating } = useMutation({
     mutationFn: createProgram,
@@ -64,8 +64,11 @@ function CreateProgramForm() {
   function onSubmit(data) {
     mutate(data);
   }
+  function onError(errors) {
+    console.log(errors);
+  }
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit, onError)}>
       <FormRow>
         <Label htmlFor="name">Program Name</Label>
         <Input
@@ -84,6 +87,10 @@ function CreateProgramForm() {
           id="maxCapacity"
           {...register("maxCapacity", {
             required: "This field is required",
+            min: {
+              value: 1,
+              message: "Capacity should be at least 1",
+            },
           })}
         />
       </FormRow>
@@ -95,6 +102,10 @@ function CreateProgramForm() {
           id="regularPrice"
           {...register("regularPrice", {
             required: "This field is required",
+            min: {
+              value: 1,
+              message: "Capacity should be at least 1",
+            },
           })}
         />
       </FormRow>
@@ -107,6 +118,9 @@ function CreateProgramForm() {
           defaultValue={0}
           {...register("discount", {
             required: "This field is required",
+            validate: (value) =>
+              value <= getValues().regularPrice ||
+              "Discount should be less than the regular price",
           })}
         />
       </FormRow>
