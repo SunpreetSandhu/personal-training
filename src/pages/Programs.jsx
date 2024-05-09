@@ -1,9 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import CreateProgramForm from "../features/programs/CreateProgramForm";
 import ProgramTable from "../features/programs/ProgramTable";
 import { getPrograms } from "../services/apiPrograms";
+import Button from "../ui/Button";
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
 function Programs() {
+  const [showForm, setShowForm] = useState(false);
   return (
     <>
       <Row type="horizontal">
@@ -12,6 +15,10 @@ function Programs() {
       </Row>
       <Row>
         <ProgramTable />
+        <Button onClick={() => setShowForm((show) => !show)}>
+          Add new program
+        </Button>
+        {showForm && <CreateProgramForm />}
       </Row>
     </>
   );
