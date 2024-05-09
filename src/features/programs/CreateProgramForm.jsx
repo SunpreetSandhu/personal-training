@@ -76,6 +76,7 @@ function CreateProgramForm() {
         <Input
           type="text"
           id="name"
+          disabled={isCreating}
           {...register("name", {
             required: "This field is required",
           })}
@@ -86,6 +87,7 @@ function CreateProgramForm() {
         <Input
           type="number"
           id="maxCapacity"
+          disabled={isCreating}
           {...register("maxCapacity", {
             required: "This field is required",
             min: {
@@ -100,6 +102,7 @@ function CreateProgramForm() {
         <Input
           type="number"
           id="regularPrice"
+          disabled={isCreating}
           {...register("regularPrice", {
             required: "This field is required",
             min: {
@@ -115,6 +118,7 @@ function CreateProgramForm() {
           type="number"
           id="discount"
           defaultValue={0}
+          disabled={isCreating}
           {...register("discount", {
             required: "This field is required",
             validate: (value) =>
@@ -124,10 +128,15 @@ function CreateProgramForm() {
         />
       </FormRow>
 
-      <FormRow label="Description" error={errors?.description?.message}>
+      <FormRow
+        disabled={isCreating}
+        label="Description"
+        error={errors?.description?.message}
+      >
         <Textarea
           type="number"
           id="description"
+          disabled={isCreating}
           defaultValue=""
           {...register("description", {
             required: "This field is required",
@@ -139,13 +148,13 @@ function CreateProgramForm() {
         <FileInput id="image" accept="image/*" />
       </FormRow>
 
-      <FormRow2>
+      <FormRow>
         {/* type is an HTML attribute! */}
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
         <Button disabled={isCreating}>Add Program</Button>
-      </FormRow2>
+      </FormRow>
     </Form>
   );
 }
