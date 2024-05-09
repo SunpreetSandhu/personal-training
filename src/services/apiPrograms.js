@@ -10,6 +10,20 @@ export async function getPrograms() {
   return data;
 }
 
+export async function createProgram(newPorgram) {
+  const { data, error } = await supabase
+    .from("programs")
+    .insert([newPorgram])
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Program could not be created");
+  }
+
+  return data;
+}
+
 export async function deleteProgram(id) {
   const { data, error } = await supabase.from("programs").delete().eq("id", id);
   if (error) {

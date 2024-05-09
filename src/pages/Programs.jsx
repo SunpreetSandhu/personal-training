@@ -16,7 +16,7 @@ function Programs() {
       <Row>
         <ProgramTable />
         <Button onClick={() => setShowForm((show) => !show)}>
-          Add new program
+          Add New Program
         </Button>
         {showForm && <CreateProgramForm />}
       </Row>

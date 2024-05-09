@@ -5,6 +5,10 @@ import Form from "../../ui/Form";
 import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
+import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createProgram } from "../../services/apiPrograms";
+import toast from "react-hot-toast";
 
 const FormRow = styled.div`
   display: grid;
@@ -43,35 +47,62 @@ const Error = styled.span`
 `;
 
 function CreateProgramForm() {
+  const queryClient = useQueryClient();
+  const { register, handleSubmit, reset } = useForm();
+
+  const { mutate, isLoading: isCreating } = useMutation({
+    mutationFn: createProgram,
+    onSuccess: () => {
+      toast.success("New program successfully created");
+      queryClient.invalidateQueries({
+        queryKey: ["program"],
+      });
+      reset();
+    },
+    onError: (err) => toast.error(err.message),
+  });
+  function onSubmit(data) {
+    mutate(data);
+  }
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow>
-        <Label htmlFor="name">Program name</Label>
-        <Input type="text" id="name" />
+        <Label htmlFor="name">Program Name</Label>
+        <Input type="text" id="name" {...register("name")} />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="maxCapacity">Maximum capacity</Label>
-        <Input type="number" id="maxCapacity" />
+        <Label htmlFor="maxCapacity">Maximum Capacity</Label>
+        <Input type="number" id="maxCapacity" {...register("maxCapacity")} />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="regularPrice">Regular price</Label>
-        <Input type="number" id="regularPrice" />
+        <Label htmlFor="regularPrice">Regular Price</Label>
+        <Input type="number" id="regularPrice" {...register("regularPrice")} />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="discount">Discount</Label>
-        <Input type="number" id="discount" defaultValue={0} />
+        <Input
+          type="number"
+          id="discount"
+          defaultValue={0}
+          {...register("discount")}
+        />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="description">Description for website</Label>
-        <Textarea type="number" id="description" defaultValue="" />
+        <Label htmlFor="description">Description for Website</Label>
+        <Textarea
+          type="number"
+          id="description"
+          defaultValue=""
+          {...register("description")}
+        />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="image">Program photo</Label>
+        <Label htmlFor="image">Program Photo</Label>
         <FileInput id="image" accept="image/*" />
       </FormRow>
 
@@ -80,7 +111,7 @@ function CreateProgramForm() {
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button>Edit program</Button>
+        <Button disabled={isCreating}>Add Program</Button>
       </FormRow>
     </Form>
   );
