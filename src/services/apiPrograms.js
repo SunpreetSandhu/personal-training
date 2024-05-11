@@ -29,7 +29,18 @@ export async function createProgram(newPorgram) {
   }
 
   //2. upload image
+  const { error: storageError } = await supabase.storage
+    .from("program-images")
+    .upload(imageName, newPorgram.image);
 
+  //3. delete cabin if error uploading image
+  if (storageError) {
+    await supabase.from("programs").delete().eq("id", data.id);
+    console.error(storageError);
+    throw new Error(
+      "Program image could not be uploaded and program could not be created"
+    );
+  }
   return data;
 }
 

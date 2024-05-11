@@ -65,7 +65,7 @@ function CreateProgramForm() {
     onError: (err) => toast.error(err.message),
   });
   function onSubmit(data) {
-    mutate({ ...data, image: data.image.at(0) });
+    mutate({ ...data, image: data.image[0] });
   }
   function onError(errors) {
     console.log(errors);
