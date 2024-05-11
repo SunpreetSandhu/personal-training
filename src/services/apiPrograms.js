@@ -1,4 +1,4 @@
-import supabase from "./supabase";
+import supabase, { supabaseUrl } from "./supabase";
 
 export async function getPrograms() {
   const { data, error } = await supabase.from("programs").select("*");
@@ -11,15 +11,24 @@ export async function getPrograms() {
 }
 
 export async function createProgram(newPorgram) {
+  const imageName = `${Math.random()}-@${newPorgram.image.name}`.replaceAll(
+    "/",
+    ""
+  );
+  const imagePath = `${supabaseUrl}/storage/v1/object/public/program-images/${imageName}`;
+  //https://kgmtpxeccxdasvbmmgny.supabase.co/storage/v1/object/public/program-images/program-001.jpg
+  //1. create prog
   const { data, error } = await supabase
     .from("programs")
-    .insert([newPorgram])
+    .insert([{ ...newPorgram, image: imagePath }])
     .select();
 
   if (error) {
     console.error(error);
     throw new Error("Program could not be created");
   }
+
+  //2. upload image
 
   return data;
 }

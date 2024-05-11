@@ -65,7 +65,7 @@ function CreateProgramForm() {
     onError: (err) => toast.error(err.message),
   });
   function onSubmit(data) {
-    mutate(data);
+    mutate({ ...data, image: data.image.at(0) });
   }
   function onError(errors) {
     console.log(errors);
@@ -145,7 +145,14 @@ function CreateProgramForm() {
       </FormRow>
 
       <FormRow label="Program Photo">
-        <FileInput id="image" accept="image/*" />
+        <FileInput
+          id="image"
+          accept="image/*"
+          type="file"
+          {...register("image", {
+            required: "This field is required",
+          })}
+        />
       </FormRow>
 
       <FormRow>
