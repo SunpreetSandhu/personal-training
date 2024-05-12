@@ -1,8 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 import { deleteProgram } from "../../services/apiPrograms";
 import { formatCurrency } from "../../utils/helpers";
+import CreateProgramForm from "./CreateProgramForm";
 const TableRow = styled.div`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
@@ -43,6 +45,7 @@ const Discount = styled.div`
 `;
 
 function ProgramRow({ program }) {
+  const [showForm, setShowForm] = useState(false);
   const {
     id: programId,
     name,
@@ -65,16 +68,22 @@ function ProgramRow({ program }) {
     onError: (err) => toast.error(err.message),
   });
   return (
-    <TableRow role="row">
-      <Img src={image} />
-      <Program>{name}</Program>
-      <div>Space for up to {maxCapacity} clients</div>
-      <Price>{formatCurrency(regularPrice)}</Price>
-      <Discount>{formatCurrency(discount)}</Discount>
-      <button onClick={() => mutate(programId)} disabled={isDeleting}>
-        Delete
-      </button>
-    </TableRow>
+    <>
+      <TableRow role="row">
+        <Img src={image} />
+        <Program>{name}</Program>
+        <div>Space for up to {maxCapacity} clients</div>
+        <Price>{formatCurrency(regularPrice)}</Price>
+        <Discount>{formatCurrency(discount)}</Discount>
+        <div>
+          <button onClick={() => setShowForm((show) => !show)}>Edit</button>
+          <button onClick={() => mutate(programId)} disabled={isDeleting}>
+            Delete
+          </button>
+        </div>
+      </TableRow>
+      {showForm && <CreateProgramForm />}
+    </>
   );
 }
 
