@@ -7,10 +7,9 @@ import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createEditProgram } from "../../services/apiPrograms";
-import toast from "react-hot-toast";
 import FormRow from "../../ui/FormRow";
 import { useCreateProgram } from "./useCreateProgram";
+import { useEditProgram } from "./useEditProgram";
 
 function CreateProgramForm({ programToEdit = {} }) {
   const { id: editId, ...editValues } = programToEdit;
@@ -22,19 +21,7 @@ function CreateProgramForm({ programToEdit = {} }) {
   const { errors } = formState;
   console.log(errors);
   const { isCreating, createProgram } = useCreateProgram();
-
-  const { mutate: editProgram, isLoading: isEditing } = useMutation({
-    mutationFn: ({ newProgramData, id }) =>
-      createEditProgram(newProgramData, id),
-    onSuccess: () => {
-      toast.success("Program successfully edited");
-      queryClient.invalidateQueries({
-        queryKey: ["program"],
-      });
-      reset();
-    },
-    onError: (err) => toast.error(err.message),
-  });
+  const { isEditing, editProgram } = useEditProgram();
   const isWorking = isCreating || isEditing;
 
   function onSubmit(data) {
@@ -45,7 +32,7 @@ function CreateProgramForm({ programToEdit = {} }) {
       createProgram(
         { ...data, image: image },
         {
-          onSuccess: (data) => reset(),
+          onSuccess: () => reset(),
         }
       );
   }
