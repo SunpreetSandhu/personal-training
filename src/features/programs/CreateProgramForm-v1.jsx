@@ -11,13 +11,9 @@ import { createProgram } from "../../services/apiPrograms";
 import toast from "react-hot-toast";
 import FormRow from "../../ui/FormRow";
 
-function CreateProgramForm({ programToEdit = {} }) {
-  const { id: editId, ...editValues } = programToEdit;
-  const isEditSession = Boolean(editId);
+function CreateProgramForm() {
   const queryClient = useQueryClient();
-  const { register, handleSubmit, reset, getValues, formState } = useForm({
-    defaultValues: isEditSession ? editValues : {},
-  });
+  const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
   console.log(errors);
 

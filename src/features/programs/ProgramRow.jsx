@@ -82,7 +82,7 @@ function ProgramRow({ program }) {
           </button>
         </div>
       </TableRow>
-      {showForm && <CreateProgramForm />}
+      {showForm && <CreateProgramForm programToEdit={program} />}
     </>
   );
 }
