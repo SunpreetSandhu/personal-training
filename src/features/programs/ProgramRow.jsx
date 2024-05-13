@@ -74,7 +74,11 @@ function ProgramRow({ program }) {
         <Program>{name}</Program>
         <div>Space for up to {maxCapacity} clients</div>
         <Price>{formatCurrency(regularPrice)}</Price>
-        <Discount>{formatCurrency(discount)}</Discount>
+        {discount ? (
+          <Discount>{formatCurrency(discount)}</Discount>
+        ) : (
+          <span>&mdash;</span>
+        )}
         <div>
           <button onClick={() => setShowForm((show) => !show)}>Edit</button>
           <button onClick={() => mutate(programId)} disabled={isDeleting}>

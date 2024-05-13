@@ -113,11 +113,7 @@ function CreateProgramForm({ programToEdit = {} }) {
         />
       </FormRow>
 
-      <FormRow
-        disabled={isWorking}
-        label="Description"
-        error={errors?.description?.message}
-      >
+      <FormRow label="Description" error={errors?.description?.message}>
         <Textarea
           type="number"
           id="description"
