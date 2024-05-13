@@ -11,7 +11,7 @@ function Programs() {
     <>
       <Row type="horizontal">
         <Heading as="h1">All programs</Heading>
-        <p>TEST</p>
+        <p>Filter</p>
       </Row>
       <Row>
         <ProgramTable />

@@ -10,19 +10,33 @@ export async function getPrograms() {
   return data;
 }
 
-export async function createProgram(newPorgram) {
-  const imageName = `${Math.random()}-@${newPorgram.image.name}`.replaceAll(
+export async function createEditProgram(newPorgram, id) {
+  const hasImagePath = newPorgram.image?.startsWith?.(supabaseUrl);
+
+  const imageName = `${Math.random()}-${newPorgram.image.name}`.replaceAll(
     "/",
     ""
   );
-  const imagePath = `${supabaseUrl}/storage/v1/object/public/program-images/${imageName}`;
-  //https://kgmtpxeccxdasvbmmgny.supabase.co/storage/v1/object/public/program-images/program-001.jpg
-  //1. create prog
-  const { data, error } = await supabase
-    .from("programs")
-    .insert([{ ...newPorgram, image: imagePath }])
-    .select();
+  const imagePath = hasImagePath
+    ? newPorgram.image
+    : `${supabaseUrl}/storage/v1/object/public/program-images/${imageName}`;
 
+  //https://kgmtpxeccxdasvbmmgny.supabase.co/storage/v1/object/public/program-images/program-001.jpg
+  //1. CREATE/EDIT prog
+
+  let query = supabase.from("programs");
+
+  //A) CREATE
+  if (!id) {
+    query = query.insert([{ ...newPorgram, image: imagePath }]);
+  }
+
+  //B) EDIT
+  if (id)
+    query = query.update({ ...newPorgram, image: imagePath }).eq("id", id);
+
+  const { data, error } = await query.select().single();
+  //to take new element out of array instantly
   if (error) {
     console.error(error);
     throw new Error("Program could not be created");
