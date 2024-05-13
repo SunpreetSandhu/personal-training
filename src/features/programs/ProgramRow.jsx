@@ -1,10 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import styled from "styled-components";
-import { deleteProgram } from "../../services/apiPrograms";
 import { formatCurrency } from "../../utils/helpers";
 import CreateProgramForm from "./CreateProgramForm";
+import { useDeleteProgram } from "./useDeleteProgram";
 const TableRow = styled.div`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
@@ -55,18 +53,8 @@ function ProgramRow({ program }) {
     image,
   } = program;
 
-  const queryClient = useQueryClient();
-  const { isLoading: isDeleting, mutate } = useMutation({
-    mutationFn: deleteProgram,
-    onSuccess: () => {
-      toast.success("program successfully deleted");
-      //invalidate so react query refetches data
-      queryClient.invalidateQueries({
-        queryKey: ["program"],
-      });
-    },
-    onError: (err) => toast.error(err.message),
-  });
+  const { isDeleting, deleteProgram } = useDeleteProgram();
+
   return (
     <>
       <TableRow role="row">
@@ -81,7 +69,10 @@ function ProgramRow({ program }) {
         )}
         <div>
           <button onClick={() => setShowForm((show) => !show)}>Edit</button>
-          <button onClick={() => mutate(programId)} disabled={isDeleting}>
+          <button
+            onClick={() => deleteProgram(programId)}
+            disabled={isDeleting}
+          >
             Delete
           </button>
         </div>
