@@ -10,6 +10,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createEditProgram } from "../../services/apiPrograms";
 import toast from "react-hot-toast";
 import FormRow from "../../ui/FormRow";
+import { useCreateProgram } from "./useCreateProgram";
 
 function CreateProgramForm({ programToEdit = {} }) {
   const { id: editId, ...editValues } = programToEdit;
@@ -20,18 +21,8 @@ function CreateProgramForm({ programToEdit = {} }) {
   });
   const { errors } = formState;
   console.log(errors);
+  const { isCreating, createProgram } = useCreateProgram();
 
-  const { mutate: createProgram, isLoading: isCreating } = useMutation({
-    mutationFn: createEditProgram,
-    onSuccess: () => {
-      toast.success("New program successfully created");
-      queryClient.invalidateQueries({
-        queryKey: ["program"],
-      });
-      reset();
-    },
-    onError: (err) => toast.error(err.message),
-  });
   const { mutate: editProgram, isLoading: isEditing } = useMutation({
     mutationFn: ({ newProgramData, id }) =>
       createEditProgram(newProgramData, id),
@@ -50,7 +41,13 @@ function CreateProgramForm({ programToEdit = {} }) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
     if (isEditSession)
       editProgram({ newProgramData: { ...data, image }, id: editId });
-    else createProgram({ ...data, image: image });
+    else
+      createProgram(
+        { ...data, image: image },
+        {
+          onSuccess: (data) => reset(),
+        }
+      );
   }
   function onError(errors) {
     console.log(errors);
