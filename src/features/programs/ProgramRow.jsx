@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 import CreateProgramForm from "./CreateProgramForm";
+import { useCreateProgram } from "./useCreateProgram";
 import { useDeleteProgram } from "./useDeleteProgram";
 const TableRow = styled.div`
   display: grid;
@@ -51,10 +53,22 @@ function ProgramRow({ program }) {
     regularPrice,
     discount,
     image,
+    description,
   } = program;
 
-  const { isDeleting, deleteProgram } = useDeleteProgram();
+  const { isCreating, createProgram } = useCreateProgram();
 
+  const { isDeleting, deleteProgram } = useDeleteProgram();
+  function handleDuplicate() {
+    createProgram({
+      name: `Copy of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      description,
+    });
+  }
   return (
     <>
       <TableRow role="row">
@@ -68,12 +82,17 @@ function ProgramRow({ program }) {
           <span>&mdash;</span>
         )}
         <div>
-          <button onClick={() => setShowForm((show) => !show)}>Edit</button>
+          <button disabled={isCreating} onClick={handleDuplicate}>
+            <HiSquare2Stack />
+          </button>
+          <button onClick={() => setShowForm((show) => !show)}>
+            <HiPencil />
+          </button>
           <button
             onClick={() => deleteProgram(programId)}
             disabled={isDeleting}
           >
-            Delete
+            <HiTrash />
           </button>
         </div>
       </TableRow>

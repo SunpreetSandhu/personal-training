@@ -43,6 +43,7 @@ export async function createEditProgram(newPorgram, id) {
   }
 
   //2. upload image
+  if (hasImagePath) return data;
   const { error: storageError } = await supabase.storage
     .from("program-images")
     .upload(imageName, newPorgram.image);
