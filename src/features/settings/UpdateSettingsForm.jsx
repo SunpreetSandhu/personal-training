@@ -3,6 +3,7 @@ import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import Spinner from "../../ui/Spinner";
 import { useSettings } from "./useSettings";
+import { useUpdateSetting } from "./useUpdateSetting";
 
 function UpdateSettingsForm() {
   const {
@@ -14,12 +15,25 @@ function UpdateSettingsForm() {
       nutritionPrice,
     } = {},
   } = useSettings();
+  const { isUpdating, updateSetting } = useUpdateSetting();
 
   if (isLoading) return <Spinner />;
+  function handleUpdate(e, field) {
+    const { value } = e.target;
+    if (!value) return;
+    updateSetting({ [field]: value });
+    console.log(value);
+  }
   return (
     <Form>
       <FormRow label="Minimum days/booking">
-        <Input type="number" id="min-days" defaultValue={minBookingLength} />
+        <Input
+          type="number"
+          id="min-days"
+          disabled={isUpdating}
+          defaultValue={minBookingLength}
+          onBlur={(e) => handleUpdate(e, "minBookingLength")}
+        />
       </FormRow>
       <FormRow label="Maximum days/booking">
         <Input type="number" id="max-days" defaultValue={maxBookingLength} />
