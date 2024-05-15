@@ -14,7 +14,7 @@ function AddProgram() {
       </Button>
       {isOpenModal && (
         <Modal onClose={() => setIsOpenModal(false)}>
-          <CreateProgramForm />
+          <CreateProgramForm onCloseModal={() => setIsOpenModal(false)} />
         </Modal>
       )}
     </div>

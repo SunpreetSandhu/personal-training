@@ -11,7 +11,7 @@ import FormRow from "../../ui/FormRow";
 import { useCreateProgram } from "./useCreateProgram";
 import { useEditProgram } from "./useEditProgram";
 
-function CreateProgramForm({ programToEdit = {} }) {
+function CreateProgramForm({ programToEdit = {}, onCloseModal }) {
   const { id: editId, ...editValues } = programToEdit;
   const isEditSession = Boolean(editId);
   const queryClient = useQueryClient();
@@ -32,7 +32,10 @@ function CreateProgramForm({ programToEdit = {} }) {
       createProgram(
         { ...data, image: image },
         {
-          onSuccess: () => reset(),
+          onSuccess: () => {
+            reset();
+            onCloseModal?.();
+          },
         }
       );
   }
@@ -122,7 +125,11 @@ function CreateProgramForm({ programToEdit = {} }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button
+          variation="secondary"
+          type="reset"
+          onClick={() => onCloseModal?.()}
+        >
           Cancel
         </Button>
         <Button disabled={isWorking}>
