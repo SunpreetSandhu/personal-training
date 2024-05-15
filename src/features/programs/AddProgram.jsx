@@ -13,7 +13,7 @@ function AddProgram() {
         Add New Program
       </Button>
       {isOpenModal && (
-        <Modal>
+        <Modal onClose={() => setIsOpenModal(false)}>
           <CreateProgramForm />
         </Modal>
       )}
