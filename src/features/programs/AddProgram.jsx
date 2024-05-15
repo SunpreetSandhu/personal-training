@@ -3,7 +3,7 @@ import { useState } from "react";
 import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
 import CreateProgramForm from "./CreateProgramForm";
-
+import ProgramTable from "./ProgramTable";
 function AddProgram() {
   return (
     <Modal>
@@ -14,12 +14,12 @@ function AddProgram() {
         <CreateProgramForm />
       </Modal.Window>
 
-      {/* <Modal.Open opens="table">
+      <Modal.Open opens="table">
         <Button>Show table</Button>
       </Modal.Open>
       <Modal.Window name="table">
-        <CreateProgramForm />
-      </Modal.Window> */}
+        <ProgramTable />
+      </Modal.Window>
     </Modal>
   );
 }
