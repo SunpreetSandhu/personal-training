@@ -96,15 +96,16 @@ function ProgramRow({ program }) {
               <CreateProgramForm programToEdit={program} />
             </Modal.Window>
             <Modal.Open>
-              <button
-                onClick={() => deleteProgram(programId)}
-                disabled={isDeleting}
-              >
+              <button disabled={isDeleting}>
                 <HiTrash />
               </button>
             </Modal.Open>
             <Modal.Window>
-              <ConfirmDelete resourceName="programs" disabled={isDeleting} />
+              <ConfirmDelete
+                resourceName="programs"
+                disabled={isDeleting}
+                onConfirm={() => deleteProgram(programId)}
+              />
             </Modal.Window>
           </Modal>
         </div>
