@@ -1,5 +1,6 @@
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import styled from "styled-components";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 import Modal from "../../ui/Modal";
 import { formatCurrency } from "../../utils/helpers";
 import CreateProgramForm from "./CreateProgramForm";
@@ -94,12 +95,17 @@ function ProgramRow({ program }) {
             <Modal.Window name="edit">
               <CreateProgramForm programToEdit={program} />
             </Modal.Window>
-            <button
-              onClick={() => deleteProgram(programId)}
-              disabled={isDeleting}
-            >
-              <HiTrash />
-            </button>
+            <Modal.Open>
+              <button
+                onClick={() => deleteProgram(programId)}
+                disabled={isDeleting}
+              >
+                <HiTrash />
+              </button>
+            </Modal.Open>
+            <Modal.Window>
+              <ConfirmDelete resourceName="programs" disabled={isDeleting} />
+            </Modal.Window>
           </Modal>
         </div>
       </TableRow>
