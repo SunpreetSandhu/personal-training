@@ -2,7 +2,15 @@ import styled from "styled-components";
 import Spinner from "../../ui/Spinner";
 import ProgramRow from "./ProgramRow";
 import { usePrograms } from "./usePrograms";
-import Table from "../../ui/Table";
+const Table = styled.div`
+  border: 1px solid var(--color-grey-200);
+
+  font-size: 1.4rem;
+  background-color: var(--color-grey-0);
+  border-radius: 7px;
+  overflow: hidden;
+`;
+
 const TableHeader = styled.header`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
@@ -22,8 +30,8 @@ function ProgramTable() {
   const { isLoading, programs } = usePrograms();
   if (isLoading) return <Spinner />;
   return (
-    <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
-      <Table.Header>
+    <Table role="table">
+      <TableHeader role="row">
         <div></div>
         <div>Program</div>
         <div>Capacity</div>
@@ -31,7 +39,7 @@ function ProgramTable() {
         <div>Discount</div>
         <div></div>
         <div></div>
-      </Table.Header>
+      </TableHeader>
       {programs.map((program) => (
         <ProgramRow program={program} key={program.id} />
       ))}
