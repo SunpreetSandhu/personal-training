@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import styled from "styled-components";
+import Modal from "../../ui/Modal";
 import { formatCurrency } from "../../utils/helpers";
 import CreateProgramForm from "./CreateProgramForm";
 import { useCreateProgram } from "./useCreateProgram";
@@ -45,7 +45,6 @@ const Discount = styled.div`
 `;
 
 function ProgramRow({ program }) {
-  const [showForm, setShowForm] = useState(false);
   const {
     id: programId,
     name,
@@ -85,18 +84,25 @@ function ProgramRow({ program }) {
           <button disabled={isCreating} onClick={handleDuplicate}>
             <HiSquare2Stack />
           </button>
-          <button onClick={() => setShowForm((show) => !show)}>
-            <HiPencil />
-          </button>
-          <button
-            onClick={() => deleteProgram(programId)}
-            disabled={isDeleting}
-          >
-            <HiTrash />
-          </button>
+          <Modal>
+            <Modal.Open opens="edit">
+              <button>
+                <HiPencil />
+              </button>
+            </Modal.Open>
+
+            <Modal.Window name="edit">
+              <CreateProgramForm programToEdit={program} />
+            </Modal.Window>
+            <button
+              onClick={() => deleteProgram(programId)}
+              disabled={isDeleting}
+            >
+              <HiTrash />
+            </button>
+          </Modal>
         </div>
       </TableRow>
-      {showForm && <CreateProgramForm programToEdit={program} />}
     </>
   );
 }
