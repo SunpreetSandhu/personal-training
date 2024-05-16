@@ -3,6 +3,7 @@ import Spinner from "../../ui/Spinner";
 import ProgramRow from "./ProgramRow";
 import { usePrograms } from "./usePrograms";
 import Table from "../../ui/Table";
+import Menus from "../../ui/Menus";
 const TableHeader = styled.header`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
@@ -22,21 +23,25 @@ function ProgramTable() {
   const { isLoading, programs } = usePrograms();
   if (isLoading) return <Spinner />;
   return (
-    <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
-      <Table.Header>
-        <div></div>
-        <div>Program</div>
-        <div>Capacity</div>
-        <div>Price</div>
-        <div>Discount</div>
-        <div></div>
-        <div></div>
-      </Table.Header>
-      <Table.Body
-        data={programs}
-        render={(program) => <ProgramRow program={program} key={program.id} />}
-      />
-    </Table>
+    <Menus>
+      <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
+        <Table.Header>
+          <div></div>
+          <div>Program</div>
+          <div>Capacity</div>
+          <div>Price</div>
+          <div>Discount</div>
+          <div></div>
+          <div></div>
+        </Table.Header>
+        <Table.Body
+          data={programs}
+          render={(program) => (
+            <ProgramRow program={program} key={program.id} />
+          )}
+        />
+      </Table>
+    </Menus>
   );
 }
 
