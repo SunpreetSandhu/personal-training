@@ -32,9 +32,10 @@ function ProgramTable() {
         <div></div>
         <div></div>
       </Table.Header>
-      {programs.map((program) => (
-        <ProgramRow program={program} key={program.id} />
-      ))}
+      <Table.Body
+        data={programs}
+        render={(program) => <ProgramRow program={program} key={program.id} />}
+      />
     </Table>
   );
 }
