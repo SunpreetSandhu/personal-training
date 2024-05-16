@@ -113,9 +113,9 @@ function ProgramRow({ program }) {
           <Menus.Menu>
             <Menus.Toggle id={programId} />
             <Menus.List id={programId}>
-              <Menus.Button>Duplicate</Menus.Button>
-              <Menus.Button>Edit</Menus.Button>
-              <Menus.Button>Delete</Menus.Button>
+              <Menus.Button icon={<HiSquare2Stack />}>Duplicate</Menus.Button>
+              <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
+              <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
             </Menus.List>
           </Menus.Menu>
         </div>
