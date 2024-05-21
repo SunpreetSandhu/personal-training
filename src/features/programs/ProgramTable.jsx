@@ -4,6 +4,7 @@ import ProgramRow from "./ProgramRow";
 import { usePrograms } from "./usePrograms";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
+import { useSearchParams } from "react-router-dom";
 const TableHeader = styled.header`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
@@ -21,7 +22,21 @@ const TableHeader = styled.header`
 
 function ProgramTable() {
   const { isLoading, programs } = usePrograms();
+  const [searchParams] = useSearchParams();
   if (isLoading) return <Spinner />;
+
+  const filterValue = searchParams.get("discount") || "all";
+  let filteredPrograms;
+  if (filterValue === "all") {
+    filteredPrograms = programs;
+  }
+  if (filterValue === "no-discount") {
+    filteredPrograms = programs.filter((program) => program.discount === 0);
+  }
+  if (filterValue === "with-discount") {
+    filteredPrograms = programs.filter((program) => program.discount > 0);
+  }
+  console.log(filterValue);
   return (
     <Menus>
       <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
@@ -35,7 +50,7 @@ function ProgramTable() {
           <div></div>
         </Table.Header>
         <Table.Body
-          data={programs}
+          data={filteredPrograms}
           render={(program) => (
             <ProgramRow program={program} key={program.id} />
           )}
