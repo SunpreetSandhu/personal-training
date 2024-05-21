@@ -40,9 +40,19 @@ function ProgramTable() {
   const sortBy = searchParams.get("sortBy") || "startDate-asc";
   const [field, direction] = sortBy.split("-");
   const modifier = direction === "asc" ? 1 : -1;
-  const sortedPrograms = filteredPrograms.sort(
-    (a, b) => (a[field] - b[field]) * modifier
-  );
+  function compare(a, b) {
+    if (a["name"] < b["name"]) {
+      return -1 * modifier;
+    }
+    if (a["name"] > b["name"]) {
+      return 1 * modifier;
+    }
+    return 0;
+  }
+  const sortedPrograms =
+    field === "name"
+      ? filteredPrograms.sort(compare)
+      : filteredPrograms.sort((a, b) => (a[field] - b[field]) * modifier);
 
   return (
     <Menus>
