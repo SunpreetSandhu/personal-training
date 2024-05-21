@@ -36,7 +36,14 @@ function ProgramTable() {
   if (filterValue === "with-discount") {
     filteredPrograms = programs.filter((program) => program.discount > 0);
   }
-  console.log(filterValue);
+
+  const sortBy = searchParams.get("sortBy") || "startDate-asc";
+  const [field, direction] = sortBy.split("-");
+  const modifier = direction === "asc" ? 1 : -1;
+  const sortedPrograms = filteredPrograms.sort(
+    (a, b) => (a[field] - b[field]) * modifier
+  );
+
   return (
     <Menus>
       <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
@@ -50,7 +57,7 @@ function ProgramTable() {
           <div></div>
         </Table.Header>
         <Table.Body
-          data={filteredPrograms}
+          data={sortedPrograms}
           render={(program) => (
             <ProgramRow program={program} key={program.id} />
           )}
