@@ -44,13 +44,13 @@ function BookingRow({
     numClients,
     totalPrice,
     status,
-    clients: { fullName: guestName, email },
+    clients: { fullName: clientName, email },
     programs: { name: programName },
   },
 }) {
   const statusToTagName = {
     unconfirmed: "blue",
-    "in-progress": "green",
+    "in-progress": "silver",
     completed: "green",
   };
 
@@ -59,7 +59,7 @@ function BookingRow({
       <Program>{programName}</Program>
 
       <Stacked>
-        <span>{guestName}</span>
+        <span>{clientName}</span>
         <span>{email}</span>
       </Stacked>
 
@@ -68,11 +68,11 @@ function BookingRow({
           {isToday(new Date(startDate))
             ? "Today"
             : formatDistanceFromNow(startDate)}{" "}
-          &rarr; {numDays} program length
+          &rarr; {numDays} days program
         </span>
         <span>
-          {format(new Date(startDate), "MMM dd yyyy")} &mdash;{" "}
-          {format(new Date(endDate), "MMM dd yyyy")}
+          {/* {format(new Date(startDate), "MMM dd yyyy")} &mdash;{" "}
+          {format(new Date(endDate), "MMM dd yyyy")} */}
         </span>
       </Stacked>
 

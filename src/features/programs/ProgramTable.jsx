@@ -5,6 +5,7 @@ import { usePrograms } from "./usePrograms";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router-dom";
+import Empty from "../../ui/Empty";
 const TableHeader = styled.header`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
@@ -24,7 +25,7 @@ function ProgramTable() {
   const { isLoading, programs } = usePrograms();
   const [searchParams] = useSearchParams();
   if (isLoading) return <Spinner />;
-
+  if (!programs.length) return <Empty resource name="programs" />;
   const filterValue = searchParams.get("discount") || "all";
   let filteredPrograms;
   if (filterValue === "all") {
