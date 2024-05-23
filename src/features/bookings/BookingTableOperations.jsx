@@ -9,8 +9,8 @@ function BookingTableOperations() {
         filterField="status"
         options={[
           { value: "all", label: "All" },
-          { value: "completed", label: "completed" },
-          { value: "in-progress", label: "in-progress" },
+          { value: "completed", label: "Completed" },
+          { value: "in-progress", label: "In-Progress" },
           { value: "unconfirmed", label: "Unconfirmed" },
         ]}
       />

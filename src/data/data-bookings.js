@@ -7,7 +7,6 @@ function fromToday(numDays, withTime = false) {
 }
 
 export const bookings = [
-  // CABIN 001
   {
     created_at: fromToday(-20, true),
     startDate: fromToday(0),
@@ -43,7 +42,6 @@ export const bookings = [
     numClients: 2,
   },
 
-  // CABIN 002
   {
     created_at: fromToday(-45, true),
     startDate: fromToday(-45),
@@ -78,7 +76,6 @@ export const bookings = [
     numClients: 2,
   },
 
-  // CABIN 003
   {
     created_at: fromToday(-65, true),
     startDate: fromToday(-25),
@@ -113,7 +110,6 @@ export const bookings = [
     numClients: 4,
   },
 
-  // CABIN 004
   {
     created_at: fromToday(-30, true),
     startDate: fromToday(-4),
@@ -148,7 +144,6 @@ export const bookings = [
     numClients: 1,
   },
 
-  // CABIN 005
   {
     created_at: fromToday(0, true),
     startDate: fromToday(14),
@@ -183,7 +178,6 @@ export const bookings = [
     numClients: 6,
   },
 
-  // CABIN 006
   {
     created_at: fromToday(-3, true),
     startDate: fromToday(0),
@@ -218,7 +212,6 @@ export const bookings = [
     numClients: 6,
   },
 
-  // CABIN 007
   {
     created_at: fromToday(-2, true),
     startDate: fromToday(17),
@@ -253,7 +246,6 @@ export const bookings = [
     numClients: 6,
   },
 
-  // CABIN 008
   {
     created_at: fromToday(-8, true),
     startDate: fromToday(-5),
