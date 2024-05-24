@@ -1,8 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import { getBookings } from "../../services/apiBookings";
 
 export function useBookings() {
+  const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 
   //FILTER
@@ -29,6 +30,12 @@ export function useBookings() {
     //added value to depend on ie filter like a dep array
     queryKey: ["bookings", filter, sortBy, page],
     queryFn: () => getBookings({ filter, sortBy, page }),
+  });
+
+  //preFetching
+  queryClient.prefetchQuery({
+    queryKey: ["bookings", filter, sortBy, page + 1],
+    queryFn: () => getBookings({ filter, sortBy, page: page + 1 }),
   });
   return { isLoading, error, bookings, count };
 }
